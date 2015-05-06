@@ -1,0 +1,90 @@
+Zachary Ferguson
+CS351 HW04 - Animated Scene Graph Editor
+03/20/2015
+
+********************************************************************************
+**************************Distribution Documentation****************************
+********************************************************************************
+
+Guide (How to Use):
+	To use this animated scene graph editor run the .exe file. This editor has 
+two modes, one for creating your character or scene and a second one for 
+animating your scene.
+
+	Once the editing mode is open you will see many widgets to use for editing 
+the individual Nodes selected. Firstly to select a Node click on it in the tree 
+view of the scene graph. Once the Node has been selected for transforming use 
+the widgets in the "Transformations" group to transform the Node and use the 
+color chooser to set the color of the Node's geometry. There are three base 
+transformations for each Node, rotation, scale, and translation. Each of these 
+can be edited using the widgets in the corresponding groups. Use the rotation 
+dial to rotate the Node between 0 and 360 degrees. Use the translation sliders 
+to translate in the x and y from -10 to 10. Lastly, use the scale sliders to 
+scale the Node from 0.1 to 5
+	The other options are to add a child Node to the current Node and to remove
+the current Node and all of its children Nodes. When adding a child Node a 
+pop-up window will appear with the possible Nodes to make, "Transformation Node
+(No Geometry)", "Polyline", "Polygon", "Quadrilateral", and "Triangle". Select
+one of these to create a new Node. Note, if you select to create a polygon 
+another window will appear prompting for the number of sides. Enter an integer 
+in the range of 3 or greater. if you enter a number less than 3 you will be 
+given a polygon with abs(n) sides or 3 sides if the input is between -3 and 3.
+	Lastly, you can reset the entire scene graph to the original one using the
+"reset" button. This will clear the current scene graph and create a default one
+in its place. 
+
+	Once you are done creating your scene click on the "Animate" button to 
+switch to the animate mode(Note: you cannot go back to the editing mode after 
+going to the animate mode). When in the animate mode a time line and time line 
+controls will appear. To move forward one frame click the ">>" button, and to 
+move back one frame click the "<<" button. Use the time line slider to go to any
+frame. Once your ready to play click the play button to see your animation. By 
+default the frame-rate is 10fps and there are 20 frames, but both of these can 
+be change by using the frame sliders. You can also toggle on and of if the 
+animation should loop using the "Loop" light button. When editing a the scene at
+a frame you can click on any of the transformations or color widget to make it a
+scene graph and edit its transforms. Key frames will set all following frames
+that are not keyed to the same frame value. 
+	Lastly to linearly interpolate the frames click on the "Interpolate" light 
+button. This will interpolate the frames between key frames, but will not make 
+them key frames. While the light button is on any changes to a key frame will 
+automatically interpolated the frames. This means your changes will 
+automatically be interpolated. If you click off the interpolate button the scene
+graph will return to a simple flip book animation style.
+
+	Use the "exit" button to close the application when done.
+
+Design Choices:
+	Working off of the previous Scene Graph editor, I choose to inherit from 
+the SceneGraphWindow class to make the AnimatedSGWindow class. They share much 
+of the same code structure, so I chose to make the AnimatedSGWindow a child of 
+the SceneGraphWindow. Also the AnimatedSGWindow class builds off the 
+SceneGraphWindow class by adding a time line. 
+	In order to deal with the key-frames and multiple scene graphs, I chose to 
+edit the Node class to include a vector of Frame's instead of a single mat3 
+transformation. Each Frame contains within it a mat3 transform, a boolean for 
+whether of not the frame is a key frame, and the color of the geometry at that 
+frame. This design choice allows me to save memory by avoiding a large vector of
+scene graphs. Instead, I just have a vector of transforms, colors, and booleans.
+	I chose to edit the Node class directly instead inheriting from it because 
+it allowed me to use the pointers from the SceneGraphWindow in the
+AnimatedSGWindow. Because of this, I had to make the Node class backwards 
+compatible so the SceneGraphWindow will work independently of the frames and 
+animation. To do this I overload the "get" and "set" methods to include a 
+frameNum argument or to default to 0 if there is none. 
+	I also choose to make the a light button selection necessary to 
+interpolation frames so the user can switch between flip-book animation and 
+linear animation.
+
+	
+Difficulties:
+	The largest difficulty I ran into was in creating different scene graphs 
+and making key frames act correctly. My choice to save some memory by using a 
+vector of frames proved to be harder to implement as I had to progressively add
+more data to store, isKeyframe and colors. Also there was the necessity to make 
+everything backwards compatible because I choose not to create a new Node class
+that inherits from the original. Overall however the design worked out and I was
+able to implement it. 
+	Another difficulty was in making sure that children Nodes key frames are the
+same as its parent. I ended up creating a method to make children nodes have the 
+same key frame and called it every time there was a new key frame.	

@@ -1,5 +1,7 @@
 # Animated Scene Graph Editor
 
+<img src="preview.png">
+
 **GUI for editing and animating a scene graph.**
 
 Animated Scene Graph Editor is a program designed to allow user	to edit and 
@@ -16,4 +18,7 @@ interpolated creating a smooth animation across all frames.
 
 The Animated Scene Graph Editor was programmed in C++ using the FLTK library and 
 OpenGL. The interface and widgets where designed using FLTK while the display 
-window is implement using OpenGL. 
+window is implement using OpenGL.
+
+Requires the FLTK libraries and the system path variables to compile 
+(look in project setting for the system variable names).

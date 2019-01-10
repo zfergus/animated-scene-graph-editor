@@ -1,6 +1,8 @@
 # Animated Scene Graph Editor
 
-<img src="preview.png">
+<p align="center">
+  <img src="animated-scene-graph.png" width="75%" title="Animated Scene Graph Editor">
+</p>
 
 **GUI for editing and animating a scene graph.**
 
